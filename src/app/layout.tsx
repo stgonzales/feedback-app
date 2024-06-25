@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/utils";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={jost.className}>{children}</body>
+      <body className={cn(jost.className, "w-screen h-screen bg-F7F8FD text-647196 flex justify-center items-center")}>{children}</body>
     </html>
   );
 }

@@ -16,3 +16,28 @@ h3 {
 h4 {
   @apply text-heading-4
 }
+
+.gradient {
+  background: radial-gradient(128.88% 128.88% at 103.9% -10.39%, #E84D70 0%, #A337F6 53.09%, #28A7ED 100%);
+}
+
+.gradient::after, .gradient::before {
+  content: "";
+  width: 192px;
+  height: 192px;
+  border-radius: 999px;
+  position: absolute;
+  filter: blur(44.8517px);
+}
+
+.gradient::before {
+  background-color: #FBB57A;
+  bottom: -70%;
+  right: -35%;
+}
+
+.gradient::after {
+  background-color: #7AD8FB;
+  top: -100%;
+  left: -40%;
+}
