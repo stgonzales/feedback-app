@@ -39,6 +39,7 @@ async function main() {
                                     description: p.description,
                                     status: p.status,
                                     upvotes: p.upvotes,
+                                    commentCount: p.comments.length
                                 },
                             }
                         }
