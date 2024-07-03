@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Feedback {
+  id           Int       @id @default(autoincrement())
+  title        String
+  category     String
+  upvotes      Int       @default(0)
+  status       String
+  description  String
+  commentCount Int       @default(0)
+  comments     Comment[]
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  content    String
+  feedback   Feedback @relation(fields: [feedbackId], references: [id])
+  feedbackId Int
+  user       User     @relation(fields: [username], references: [username])
+  username   String
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String
+  username String    @unique
+  image    String
+  comments Comment[]
+}
