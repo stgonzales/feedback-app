@@ -1,27 +1,24 @@
+import { Suspense } from "react";
 import { Button } from "@/components/button";
-import { LampGear } from "@/components/icons/lamp-gear";
-import { Tag } from "@/components/tag";
+import { SortBy } from "@/components/sortby";
+import { FilterTags } from "@/components/category";
+import { categoryAction } from "@/actions";
+import { FeedbackCount } from "@/components/counter";
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-6 pt-24">
       <aside className="flex flex-col gap-6">
         <div id="app-name" className="w-[255px] h-[137px] flex flex-col p-6 gradient text-FFFFFF rounded-xl justify-end to-blue-500 relative overflow-hidden">
             <h2>Frontend Mentor</h2>
             <p className="text-body-2">Feedback Board</p>
         </div>
-        <div id="tags" className="w-[255px] p-6 bg-FFFFFF rounded-xl flex gap-2 flex-wrap">
-            <Tag>All</Tag>
-            <Tag>UI</Tag>
-            <Tag>UX</Tag>
-            <Tag>Enhancement</Tag>
-            <Tag>Bug</Tag>
-            <Tag>Feature</Tag>
-        </div>
+        <FilterTags action={categoryAction} categories={['ui', 'ux', 'enhancement', 'bug', 'feature']}/>
         <div id="roadmap" className="w-[255px] p-6 bg-FFFFFF rounded-xl flex flex-col gap-6">
           <div className="flex justify-between">
             <p className="text-heading-3 text-3A4374">Roadmap</p>
@@ -47,17 +44,18 @@ export default function Layout({
         </div>
       </aside>
       <div className="flex flex-col gap-6 text-FFFFFF">
-        <header className="w-full bg-373F68 pl-6 pr-4 py-[14px] rounded-xl flex justify-between">
+        <header className="w-full bg-373F68 pl-6 pr-4 rounded-xl flex justify-between items-center">
           <div className="flex items-center gap-9">
-            <div className="flex gap-4 items-center">
-              <LampGear/>
-              <p className="text-heading-3">0 Suggestions</p>
-            </div>
-          <p className="text-heading-4 font-normal">Sort by: <span className="text-heading-4">Most Upvoted</span></p>
+            <FeedbackCount/>
+            <Suspense>
+              <SortBy/>
+            </Suspense>
           </div>
           <Button>+ Add Feedback</Button>
         </header>
-        {children}
+        <main className="w-[825px]">
+          {children}
+        </main>
       </div>
     </div>
   );
