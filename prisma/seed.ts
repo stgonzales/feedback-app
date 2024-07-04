@@ -39,45 +39,63 @@ const file = fs.readFileSync(require.resolve("./database/data.json"), {
 });
 
 async function main() {
-    const { productRequests } = DataSchema.parse(JSON.parse(file))
-
+    const { productRequests } =JSON.parse(file) as DataType
+    
     productRequests.forEach(async(p) => {
-        if(p.comments && p.comments.length > 0) {
+        //Create feedback
+        const feedback = await prisma.feedback.create({
+            data: {
+                title: p.title,
+                category: p.category,
+                description: p.description,
+                status: p.status,
+                upvotes: p.upvotes,
+            }
+        })
+
+        if(p.comments.length >= 1) {
+            await prisma.feedback.update({
+                where: {
+                    id: feedback.id
+                },
+                data: {
+                    commentCount: p.comments.length
+                }
+            })
+
             p.comments.forEach(async (c) => {
+
+                //Create User
+                let user = await prisma.user.findUnique({
+                    where: {
+                        username: c.user.username
+                    }
+                })
+
+                if(!user) {
+                    user = await prisma.user.create({
+                        data: {
+                            name: c.user.name,
+                            username: c.user.username,
+                            image: c.user.image,
+                        }
+                    })
+                }
+
+                //Create comment and connect
                 await prisma.comment.create({
                     data: {
                         content: c.content,
                         user: {
-                            connectOrCreate: {
-                                where: {
-                                    username: c.user.username,
-                                },
-                                create: {
-                                    name: c.user.name,
-                                    username: c.user.username,
-                                    image: c.user.image,
-                                }
+                            connect: {
+                                username: user.username
                             }
                         },
                         feedback: {
-                            connectOrCreate: {
-                                where: {
-                                    id: p.id
-                                },
-                                create: {
-                                    title: p.title,
-                                    category: p.category,
-                                    description: p.description,
-                                    status: p.status,
-                                    upvotes: p.upvotes,
-                                    commentCount: p.comments.length
-                                },
+                            connect: {
+                                id: feedback.id
                             }
                         }
-                    },
-                    include: {
-                        user: true,
-                        feedback: true
                     }
                 })
             })
