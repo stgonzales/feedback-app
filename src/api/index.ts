@@ -5,7 +5,9 @@ import { SortByValueType } from "@/types"
 const prisma = new PrismaClient()
 
 export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Promise<Feedback[]> {
-    const categories = cookies().get('category')?.value.split(',') || []
+    const raw = cookies().get('category')?.value as string
+    const parsed = JSON.parse(raw)
+    const categories = !parsed.length ? ['bug', 'enhancement', 'feature', 'ui', 'ux'] : parsed
 
     switch (true) {
         case sortby === 'least_comments':

@@ -3,37 +3,30 @@
 import { ChangeEvent } from "react";
 import { useFormState } from "react-dom";
 import { Tag } from "@/components/tag";
-import { CategoryKeyType, CategoryMapType } from "@/types";
+import { CategoryKeyType } from "@/types";
+import { CategoriesOptionMap } from "@/schema";
 
-const categoriesOptionMap: CategoryMapType = {
-    bug: 'Bug',
-    enhancement: 'Enhancement',
-    feature: 'Feature',
-    ui: 'UI',
-    ux: 'UX'
-} as const
-
-export function FilterTags({ categories, action }: { categories: CategoryKeyType[], action: (state: string, payload: FormData) => Promise<string>}) {
-    const initialState = 'all'
+export function FilterTags({ categories, action }: { categories: CategoryKeyType[], action: (state: CategoryKeyType[], payload: FormData) => Promise<CategoryKeyType[]>}) {
+    const initialState: CategoryKeyType[]  = []
     const [state, formAction] = useFormState(action, initialState);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData()
 
-        if(e.target.id === initialState || state.includes(initialState)) {
-            formData.append('category', e.target.id)
-        } else {
-            const stateArr = state.split(',').filter(s => s !== initialState)
-            let newState = []
+        let newState: CategoryKeyType[] = initialState
 
-            if(stateArr.includes(e.target.id)) {
-                const index = stateArr.findIndex(s => s === e.target.id)
-                newState = stateArr.slice(index + 1)
+        if(e.target.id === 'all') {
+            formData.append('category', JSON.stringify(initialState))
+        } else {
+            const id = e.target.id as CategoryKeyType
+
+            if(state.includes(id)) {
+                newState = state.filter(s => s !== id)
             } else {
-                newState.push(stateArr.join() + ',' + e.target.id)
+                newState.push(...state, id)
             }
 
-            formData.append('category', newState.join())
+            formData.append('category', JSON.stringify(newState))
         }
 
         formAction(formData)
@@ -43,13 +36,13 @@ export function FilterTags({ categories, action }: { categories: CategoryKeyType
         <div id="tags" className="w-[255px] p-6 bg-FFFFFF rounded-xl">
             <form action={formAction} className="flex gap-2 flex-wrap">
                 <Tag key="all" id="all">
-                    <input type="checkbox" id="all" className="hidden" onChange={handleChange} checked={state === "all"}/>
+                    <input type="checkbox" id="all" className="hidden" onChange={handleChange} checked={!state.length}/>
                     All
                 </Tag>
                 { categories.map(c => (
                     <Tag key={c} id={c}>
                         <input type="checkbox" id={c} className="hidden" onChange={handleChange} checked={state.includes(c)}/>
-                        {categoriesOptionMap[c]}
+                        {CategoriesOptionMap[c]}
                     </Tag>
                 ))}
             </form>
