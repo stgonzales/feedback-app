@@ -1,31 +1,16 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-export const UserSchema = z.object({
-    id: z.string().min(1),
-    image: z.string().min(1),
-    name: z.string().min(1),
-    username: z.string().min(1),
+export const SortByValueEnum = z.enum(['most_upvotes', 'least_upvotes', 'most_comments', 'least_comments'])
+
+export const SortByKeyEnum = z.enum(['Most Upvotes', 'Least Upvotes', 'Most Comments', 'Least Comments'])
+
+export const SortByOptionSchema = z.object({
+    text: SortByKeyEnum,
+    value: SortByValueEnum
 })
 
-export const CommentSchema = z.object({
-    id: z.string(),
-    content: z.string().min(1),
-    user: UserSchema,
-})
+export const SortByOptionsMapSchema = z.array(SortByOptionSchema)
 
-export const ProductRequestSchema = z.object({
-    id: z.number(),
-    title: z.string().min(1),
-    category: CategoryKeyEnum,
-    upvotes: z.number().default(0),
-    status: z.string().min(1),
-    description: z.string().min(1),
-    comments: z.array(CommentSchema),
-    commentsCount: z.number().default(0)
-})
+export const CategoryKeyEnum = z.enum(['ui', 'ux', 'enhancement', 'bug', 'feature'])
 
-export const DataSchema = z.object({
-    productRequests: z.array(ProductRequestSchema)
-})
-
-export type DataType = z.infer<typeof DataSchema>
+export const CategoryValueEnum = z.enum(['UI', 'UX', 'Enhancement', 'Bug', 'Feature'])

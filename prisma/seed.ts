@@ -1,15 +1,46 @@
 import fs from "fs";
-import { Feedback, PrismaClient } from '@prisma/client'
-import { DataType } from "@/schema";
+import { z } from "zod";
+import { PrismaClient } from '@prisma/client'
+import { CategoryKeyEnum } from "../src/schema";
+
 const prisma = new PrismaClient()
+
+export const UserSchema = z.object({
+    image: z.string().min(1),
+    name: z.string().min(1),
+    username: z.string().min(1),
+})
+
+export const CommentSchema = z.object({
+    id: z.number(),
+    content: z.string().min(1),
+    user: UserSchema,
+})
+
+export const ProductRequestSchema = z.object({
+    id: z.number(),
+    title: z.string().min(1),
+    category: CategoryKeyEnum,
+    upvotes: z.number().default(0),
+    status: z.string().min(1),
+    description: z.string().min(1),
+    comments: z.array(CommentSchema),
+    commentsCount: z.number().default(0)
+})
+
+export const DataSchema = z.object({
+    productRequests: z.array(ProductRequestSchema)
+})
+
+export type DataType = z.infer<typeof DataSchema>
 
 const file = fs.readFileSync(require.resolve("./database/data.json"), {
     encoding: "utf-8",
 });
 
-const { productRequests } = JSON.parse(file) as DataType
-
 async function main() {
+    const { productRequests } = DataSchema.parse(JSON.parse(file))
+
     productRequests.forEach(async(p) => {
         if(p.comments && p.comments.length > 0) {
             p.comments.forEach(async (c) => {
