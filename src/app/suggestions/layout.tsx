@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Button } from "@/components/button";
 import { SortBy } from "@/components/sortby";
 import { FilterTags } from "@/components/category";
-import { categoryAction } from "@/actions";
 import { FeedbackCount } from "@/components/counter";
 
 export default async function Layout({
@@ -18,7 +17,7 @@ export default async function Layout({
             <h2>Frontend Mentor</h2>
             <p className="text-body-2">Feedback Board</p>
         </div>
-        <FilterTags action={categoryAction} categories={['ui', 'ux', 'enhancement', 'bug', 'feature']}/>
+        <FilterTags categories={['ui', 'ux', 'enhancement', 'bug', 'feature']}/>
         <div id="roadmap" className="w-[255px] p-6 bg-FFFFFF rounded-xl flex flex-col gap-6">
           <div className="flex justify-between">
             <p className="text-heading-3 text-3A4374">Roadmap</p>
