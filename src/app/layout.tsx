@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(jost.className, "min-w-screen min-h-screen bg-F7F8FD text-647196 flex justify-center")}>{children}</body>
+      <body className={cn(jost.className, "min-w-screen min-h-screen text-body-3 bg-F7F8FD text-647196 sm:flex justify-center")}>{children}</body>
     </html>
   );
 }

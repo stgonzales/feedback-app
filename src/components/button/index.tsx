@@ -27,7 +27,7 @@ const buttonStyle = tv({
         }
     },
     slots: {
-        button: 'h-fit text-heading-4 font-bold text-F2F4FF py-3 px-12 rounded-xl',
+        button: 'h-fit text-body-3 font-bold text-F2F4FF py-3 px-4 rounded-xl text-nowrap md:text-heading-4 md:px-12',
         link: 'text-heading-4 font-bold text-647196 hover:underline'
     }
 })

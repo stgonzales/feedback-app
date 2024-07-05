@@ -17,7 +17,8 @@ const config: Config = {
       '647196': '#647196',
       'F49F85': '#F49F85',
       '62BCFA': '#62BCFA',
-      'D73737': '#D73737'
+      'D73737': '#D73737',
+      '000000': '#000000'
     },
     fontSize: {
       'body-1': ['1rem', {
@@ -53,6 +54,33 @@ const config: Config = {
     },
     gradientColorStops: {
       
+    },
+    extend: {
+      animation: {
+        'slide-in': 'slide-in-from-right 350ms ease-in',
+        'slide-out': 'slide-in-from-right 200ms ease-in-out reverse',
+        appears: 'appears 350ms ease-in',
+      },
+      keyframes: {
+        appears: {
+          '0%': {
+            opacity: '0'
+          },
+          '100%': {
+            opacity: '1'
+          }
+        },
+        'slide-in-from-right': {
+          '0%': { 
+            transform: 'translateX(100px)',
+            opacity: '0'
+          },
+          '100%': {
+            transform: 'translate-x(0)',
+            opacity: '1'
+          }
+        },
+      }
     }
   },
   plugins: [],

@@ -5,7 +5,7 @@ import { Button } from '@/components/button';
 import { SortByValueEnum, CategoryKeyEnum } from '@/schema';
 import { FeedbackItem } from '@/components/feedback';
 import { CategoryKeyType } from '@/types';
-import { parseFilters } from '@/utils';
+import { formatFilters } from '@/utils';
 
 export default async function Suggestions({
   searchParams,
@@ -18,17 +18,17 @@ export default async function Suggestions({
 
     const validSortBy = SortByValueEnum.safeParse(searchParams['sortBy'])
 
-    const categories = parseFilters<CategoryKeyType>(searchParams.category)
+    const categories = formatFilters<CategoryKeyType>(searchParams.category)
 
     const data = await GetRequests(validSortBy.data, categories)
 
     if(!data.length) {
         return (
-          <div className="h-full bg-FFFFFF rounded-xl flex flex-col justify-center items-center gap-12 text-647196 py-28">
+          <div className="h-full bg-FFFFFF rounded-xl flex flex-col justify-center items-center gap-12 text-647196 py-28 animate-appears">
               <Image src="/detective.png" alt='detective' width={130} height={136}/>
-              <div className="w-[410px] flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center gap-4 text-center px-6">
                   <p className="text-heading-1">There is no feedback yet.</p>
-                  <p className="text-body-1">Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.</p>
+                  <p className="text-body-1 max-w-[278px] md:max-w-[410px] ">Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.</p>
               </div>
               <Button>+ Add Feedback</Button>
           </div>

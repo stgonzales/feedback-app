@@ -52,7 +52,7 @@ export function SortBy() {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild className="py-[26px] bg-373F68">
-                <button aria-label="Sort By Options" className='flex items-center gap-1 text-F2F4FF data-[state=open]:text-F2F4FF/75 group'>
+                <button aria-label="Sort By Options" className='flex items-center gap-1 text-body-3 text-F2F4FF data-[state=open]:text-F2F4FF/75 group text-nowrap'>
                     Sort by: 
                     <span className="text-heading-4" >
                         <div className='flex items-center gap-2'>
