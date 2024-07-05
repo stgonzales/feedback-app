@@ -14,11 +14,12 @@ export function Sidebar() {
                 <HamburgerMenu className="md:hidden z-10"/>
             </Tile>
             <FilterTags categories={['ui', 'ux', 'enhancement', 'bug', 'feature']}/>
-            <Tile id="roadmap" className="hidden justify-between md:flex md:rounded-xl md:flex-col">
+            <Tile id="roadmap" className="hidden justify-between md:flex md:rounded-xl md:flex-col gap-6">
                 <div className="flex justify-between">
                     <p className="text-heading-3 text-3A4374">Roadmap</p>
                     <Button styleAs="link">View</Button>
                 </div>
+                
                 <div className="flex flex-col gap-2">
                     <div className="flex gap-4 items-center text-body-1 text-647196">
                     <div className="w-2 h-2 bg-F49F85 rounded-full"/>
