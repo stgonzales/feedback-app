@@ -2,18 +2,25 @@ import Image from 'next/image'
 
 import { GetRequests } from '@/api';
 import { Button } from '@/components/button';
-import { SortByValueEnum } from '@/schema';
+import { SortByValueEnum, CategoryKeyEnum } from '@/schema';
 import { FeedbackItem } from '@/components/feedback';
+import { CategoryKeyType } from '@/types';
+import { parseFilters } from '@/utils';
 
 export default async function Suggestions({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: {
+    category: CategoryKeyType | CategoryKeyType[] | undefined
+    sortBy: string | undefined
+  }
 }) {
 
     const validSortBy = SortByValueEnum.safeParse(searchParams['sortBy'])
 
-    const data = await GetRequests(validSortBy.data)
+    const categories = parseFilters<CategoryKeyType>(searchParams.category)
+
+    const data = await GetRequests(validSortBy.data, categories)
 
     if(!data.length) {
         return (
@@ -29,7 +36,7 @@ export default async function Suggestions({
     }
     
     return (
-      <div className='flex flex-col gap-5'>
+      <div id="feedbacks" className='flex flex-col gap-5'>
           {data.map((d, i) => <FeedbackItem key={i} {...d}/>)}
       </div>
     )

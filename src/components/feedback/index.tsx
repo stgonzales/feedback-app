@@ -34,7 +34,7 @@ const categoryMap: z.infer<typeof CategoryMap>[] = [
 
 export function FeedbackItem({ upvotes, title, description, category, commentCount }: Feedback) {
     return (
-        <div className='bg-FFFFFF rounded-xl flex justify-between items-start gap-12 text-647196 py-7 px-8 hover:shadow-md hover:cursor-pointer'>
+        <div className='bg-FFFFFF rounded-xl flex justify-between items-start gap-12 text-647196 py-7 px-8 transition-shadow hover:shadow-md hover:cursor-pointer'>
             <div>
                 <div id='upvotes' className='w-fit py-[6px] px-4 rounded-xl bg-F2F4FF font-semibold text-body-3 text-3A4374 flex flex-col items-center gap-2 pt-3 pb-2 hover:cursor-default'><ChevronUpIcon color='#4661E6' width={18} height={18}/><p>{upvotes}</p></div>
             </div>

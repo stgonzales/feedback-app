@@ -1,51 +1,34 @@
 "use client"
 
 import { ChangeEvent } from "react";
-import { useFormState } from "react-dom";
 import { Tag } from "@/components/tag";
 import { CategoryKeyType } from "@/types";
 import { CategoriesOptionMap } from "@/schema";
+import { useParams } from "@/hooks";
 
-export function FilterTags({ categories, action }: { categories: CategoryKeyType[], action: (state: CategoryKeyType[], payload: FormData) => Promise<CategoryKeyType[]>}) {
-    const initialState: CategoryKeyType[]  = []
-    const [state, formAction] = useFormState(action, initialState);
+export function FilterTags({ categories }: { categories: CategoryKeyType[] }) {
+    const { paramstate, deleteParams, appendParams } = useParams()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const formData = new FormData()
+        const params = paramstate.getAll('category')
 
-        let newState: CategoryKeyType[] = initialState
-
-        if(e.target.id === 'all') {
-            formData.append('category', JSON.stringify(initialState))
-        } else {
-            const id = e.target.id as CategoryKeyType
-
-            if(state.includes(id)) {
-                newState = state.filter(s => s !== id)
-            } else {
-                newState.push(...state, id)
-            }
-
-            formData.append('category', JSON.stringify(newState))
-        }
-
-        formAction(formData)
+        if(e.target.id === 'all') deleteParams('category')
+        else if(params.includes(e.target.id)) deleteParams('category', e.target.id)
+        else appendParams('category', e.target.id)
     }
     
     return (
-        <div id="tags" className="w-[255px] p-6 bg-FFFFFF rounded-xl">
-            <form action={formAction} className="flex gap-2 flex-wrap">
-                <Tag key="all" id="all">
-                    <input type="checkbox" id="all" className="hidden" onChange={handleChange} checked={!state.length}/>
-                    All
+        <div id="tags" className="w-[255px] p-6 bg-FFFFFF rounded-xl flex gap-2 flex-wrap">
+            <Tag id="all">
+                <input type="checkbox" id="all" name="all" className="hidden" onChange={handleChange} checked={!paramstate.has('category') || paramstate.get('category')?.toString() === 'all'}/>
+                All
+            </Tag>
+            { categories.map(c => (
+                <Tag key={c} id={c}>
+                    <input type="checkbox" id={c} name={c} className="hidden" onChange={handleChange} checked={paramstate.getAll('category').includes(c)}/>
+                    {CategoriesOptionMap[c]}
                 </Tag>
-                { categories.map(c => (
-                    <Tag key={c} id={c}>
-                        <input type="checkbox" id={c} className="hidden" onChange={handleChange} checked={state.includes(c)}/>
-                        {CategoriesOptionMap[c]}
-                    </Tag>
-                ))}
-            </form>
+            ))}
         </div>
     )
 }

@@ -1,14 +1,12 @@
 import { cookies } from "next/headers"
 import { Feedback, PrismaClient } from "@prisma/client"
-import { SortByValueType } from "@/types"
+import { CategoryKeyType, SortByValueType } from "@/types"
 
 const prisma = new PrismaClient()
 
-export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Promise<Feedback[]> {
-    const raw = cookies().get('category')?.value as string
-    const parsed = JSON.parse(raw)
-    const categories = !parsed.length ? ['bug', 'enhancement', 'feature', 'ui', 'ux'] : parsed
+const defaultFilters: CategoryKeyType[] = ['bug', 'enhancement', 'feature', 'ui', 'ux']
 
+export async function GetRequests(sortby: SortByValueType = 'most_upvotes', filters: CategoryKeyType[] = defaultFilters): Promise<Feedback[]> {
     switch (true) {
         case sortby === 'least_comments':
             return await prisma.feedback.findMany({
@@ -16,7 +14,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Pro
                     OR: [
                         {
                             category: {
-                                in: categories
+                                in: filters
                             }
                         }
                     ]
@@ -32,7 +30,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Pro
                     OR: [
                         {
                             category: {
-                                in: categories
+                                in: filters
                             }
                         }
                     ]
@@ -48,7 +46,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Pro
                     OR: [
                         {
                             category: {
-                                in: categories
+                                in: filters
                             }
                         }
                     ]
@@ -64,7 +62,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes'): Pro
                     OR: [
                         {
                             category: {
-                                in: categories
+                                in: filters
                             }
                         }
                     ]
