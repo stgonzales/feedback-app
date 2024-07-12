@@ -32,13 +32,13 @@ const categoryMap: z.infer<typeof CategoryMap>[] = [
     },
 ] 
 
-export function FeedbackItem({ upvotes, title, description, category, commentCount }: Feedback) {
+export function FeedbackItem({ upvotesCount, title, description, category, commentsCount }: Feedback) {
     return (
         <div className='animate-slide-in bg-FFFFFF rounded-xl flex flex-col-reverse md:flex-row justify-between items-start gap-4 md:gap-12 text-647196 p-6  md:py-7 md:px-8 transition-shadow hover:shadow-md hover:cursor-pointer'>
             <div>
                 <div id='upvotes' className='w-fit py-[6px] px-4 rounded-xl bg-F2F4FF font-semibold text-body-3 text-3A4374 flex md:flex-col items-center gap-2 pt-3 pb-2 hover:cursor-default'>
                     <ChevronUpIcon color='#4661E6' width={18} height={18}/>
-                    <p>{upvotes}</p>
+                    <p>{upvotesCount}</p>
                 </div>
             </div>
             <div className='w-full relative flex-1 flex justify-between items-center'>
@@ -52,7 +52,7 @@ export function FeedbackItem({ upvotes, title, description, category, commentCou
                 <div className='absolute right-0 -bottom-12 md:static flex gap-2 items-center'>
                     {/* <MessageBalloon/> */}
                     <ChatBubbleIcon width={20} height={20} color='#CDD2EE'/>
-                    <p className='font-bold'>{commentCount}</p>
+                    <p className='font-bold'>{commentsCount}</p>
                 </div>
             </div>
         </div>
