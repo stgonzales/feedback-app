@@ -11,7 +11,7 @@ export default async function Layout({
 }>) {
 
   return (
-    <div className="w-full flex flex-col md:w-auto md:gap-10 md:pt-14 md:px-10 lg:flex-row lg:gap-6 lg:pt-24">
+    <div className="flex flex-col m-auto md:gap-6 md:pt-14 md:px-6 md:max-w-[689px] lg:max-w-[1110px] lg:flex-row">
       <Sidebar/>
       <div className="flex flex-col gap-6 text-FFFFFF">
         <Header>
@@ -21,10 +21,12 @@ export default async function Layout({
           </div>
           <Button>+ Add Feedback</Button>
         </Header>
-        <main className="px-6 md:px-0 lg:max-w-[825px]">
+        <main className="px-6 md:p-0">
           {children}
         </main>
       </div>
     </div>
   );
 }
+
+//w-full flex flex-col md:m-auto md:gap-10 md:pt-14 md:px-10 lg:flex-row lg:gap-6 lg:pt-24

@@ -5,7 +5,7 @@ import { Tag } from "@/components/tag";
 import { CategoryKeyType } from "@/types";
 import { CategoriesOptionMap } from "@/schema";
 import { useParams } from "@/hooks";
-import { Tile } from "../layout/tile";
+import { Frame } from "../layout/frame";
 
 export function FilterTags({ categories }: { categories: CategoryKeyType[] }) {
     const { paramstate, deleteParams, appendParams } = useParams()
@@ -18,7 +18,7 @@ export function FilterTags({ categories }: { categories: CategoryKeyType[] }) {
         else appendParams('category', e.target.id)
     }
     return (
-        <Tile id="tags" className="hidden md:flex md:rounded-xl md:flex-wrap gap-2">
+        <Frame id="tags" className="hidden md:w-full md:flex md:rounded-xl md:flex-wrap gap-2">
             <Tag id="all">
                 <input type="checkbox" id="all" name="all" className="hidden" onChange={handleChange} checked={!paramstate().has('category') || paramstate().get('category')?.toString() === 'all'}/>
                 All
@@ -29,6 +29,6 @@ export function FilterTags({ categories }: { categories: CategoryKeyType[] }) {
                     {CategoriesOptionMap[c]}
                 </Tag>
             ))}
-        </Tile>
+        </Frame>
     )
 }

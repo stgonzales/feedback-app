@@ -1,9 +1,9 @@
 import { cn } from "@/utils";
 import { HTMLAttributes, ReactNode } from "react";
 
-export function Tile({ children, className, ...props }: { children: ReactNode } & HTMLAttributes<HTMLDivElement>) {
+export function Frame({ children, className, ...props }: { children: ReactNode } & HTMLAttributes<HTMLDivElement>) {
     return (
-        <div className={cn("p-6 bg-FFFFFF animate-appears md:w-[255px]", className)} {...props}>
+        <div className={cn("p-6 bg-FFFFFF animate-appears", className)} {...props}>
             {children}
         </div>
     )
