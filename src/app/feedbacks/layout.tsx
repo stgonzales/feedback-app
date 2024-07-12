@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/form-elements/input/button";
 import { SortBy } from "@/components/sortby";
 import { FeedbackCount } from "@/components/counter";
 import { Sidebar } from "@/components/layout/sidebar";

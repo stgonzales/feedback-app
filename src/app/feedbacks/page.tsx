@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { GetRequests } from '@/api';
-import { Button } from '@/components/button';
+import { Button } from '@/components/form-elements/input/button';
 import { SortByValueEnum, CategoryKeyEnum } from '@/schema';
 import { FeedbackItem } from '@/components/feedback';
 import { CategoryKeyType } from '@/types';

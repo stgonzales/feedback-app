@@ -19,7 +19,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes', filt
             ]
         },
         orderBy: {
-            commentCount: formatSortBy(sortby)
+            commentsCount: formatSortBy(sortby)
         }
     })
 }

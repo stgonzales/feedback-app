@@ -1,5 +1,5 @@
 import { HTMLAttributes, HtmlHTMLAttributes } from "react";
-import { Button } from "../button";
+import { Button } from "../form-elements/input/button";
 import { cn } from "@/utils";
 
 export function RoadmapSummary({ className }: HTMLAttributes<HTMLDivElement>) {

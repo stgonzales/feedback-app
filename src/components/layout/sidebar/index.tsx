@@ -1,4 +1,4 @@
-import { Button } from "../../button";
+import { Button } from "../../form-elements/input/button";
 import { FilterTags } from "../../category";
 import { HamburgerMenu } from "../../hamburger-menu";
 import { Frame } from "../frame";
