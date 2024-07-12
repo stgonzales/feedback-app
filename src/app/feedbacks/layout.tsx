@@ -14,7 +14,7 @@ export default async function Layout({
     <div className="flex flex-col m-auto md:gap-6 md:pt-14 md:px-6 md:max-w-[689px] lg:max-w-[1110px] lg:flex-row">
       <Sidebar/>
       <div className="flex flex-col gap-6 text-FFFFFF">
-        <Header>
+        <Header className="bg-373F68">
           <div className="flex gap-9">
             <FeedbackCount/>
             <SortBy/>
