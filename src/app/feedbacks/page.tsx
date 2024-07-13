@@ -6,6 +6,7 @@ import { SortByValueEnum, CategoryKeyEnum } from '@/schema';
 import { FeedbackItem } from '@/components/feedback';
 import { CategoryKeyType } from '@/types';
 import { formatFilters } from '@/utils';
+import Link from 'next/link';
 
 export default async function Suggestions({
   searchParams,
@@ -30,7 +31,9 @@ export default async function Suggestions({
                   <p className="text-heading-1">There is no feedback yet.</p>
                   <p className="text-body-1 max-w-[278px] md:max-w-[410px] ">Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.</p>
               </div>
-              <Button>+ Add Feedback</Button>
+              <Button asChild>
+                <Link href="/feedback/new-feedback">+ Add Feedback</Link>
+              </Button>
           </div>
         )
     }

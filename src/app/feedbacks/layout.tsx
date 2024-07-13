@@ -3,6 +3,7 @@ import { SortBy } from "@/components/sortby";
 import { FeedbackCount } from "@/components/counter";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
+import Link from "next/link";
 
 export default async function Layout({
   children,
@@ -19,7 +20,9 @@ export default async function Layout({
             <FeedbackCount/>
             <SortBy/>
           </div>
-          <Button>+ Add Feedback</Button>
+          <Button asChild>
+            <Link href="/feedback/new-feedback">+ Add Feedback</Link>
+          </Button>
         </Header>
         <main className="px-6 md:p-0">
           {children}
