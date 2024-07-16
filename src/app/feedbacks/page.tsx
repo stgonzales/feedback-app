@@ -1,10 +1,9 @@
 import Image from 'next/image'
 
-import { GetRequests } from '@/api';
+import { GetFeedbacks } from '@/api';
 import { Button } from '@/components/form-elements/input/button';
-import { SortByValueEnum, CategoryKeyEnum } from '@/schema';
 import { FeedbackItem } from '@/components/feedback';
-import { CategoryKeyType } from '@/types';
+import { CategoryKeyType, SortByValueType } from '@/types';
 import { formatFilters } from '@/utils';
 import Link from 'next/link';
 
@@ -17,11 +16,11 @@ export default async function Suggestions({
   }
 }) {
 
-    const validSortBy = SortByValueEnum.safeParse(searchParams['sortBy'])
+    const sortBy = searchParams.sortBy as SortByValueType || undefined
 
     const categories = formatFilters<CategoryKeyType>(searchParams.category)
 
-    const data = await GetRequests(validSortBy.data, categories)
+    const data = await GetFeedbacks(sortBy, categories)
 
     if(!data.length) {
         return (

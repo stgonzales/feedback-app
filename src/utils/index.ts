@@ -1,7 +1,7 @@
+import { Prisma } from '@prisma/client'
 import { SortByValueType } from '@/types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import type { ZodEnum, ZodSchema } from 'zod'
 
 export const cn = (...args: ClassValue[]) => twMerge(clsx(args))
 
@@ -11,15 +11,23 @@ export const formatFilters = <T>(s?: T | T[]): T[] | undefined => {
     return s
 }
 
-export const formatSortBy = (s: SortByValueType): 'asc' | 'desc' => {
+export const FormatQuerySortBy = async (k: SortByValueType): Promise<Prisma.FeedbackOrderByWithRelationInput> => {
     switch (true) {
-        case s === 'least_comments':
-            return 'asc'
-        case s === 'most_comments':
-            return 'desc'
-        case s === 'least_upvotes':
-            return 'asc'
+        case k === 'least_comments':
+            return {
+                commentsCount: 'asc'
+            }
+        case k === 'most_comments':
+            return {
+                commentsCount: 'desc'
+            }
+        case k === 'least_upvotes':
+            return {
+                upvotesCount: 'asc'
+            }
         default:
-            return 'desc'
+            return {
+                upvotesCount: 'desc'
+            }
     }
 }

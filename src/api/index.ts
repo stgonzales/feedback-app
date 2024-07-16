@@ -1,13 +1,15 @@
-import { cookies } from "next/headers"
 import { Feedback, PrismaClient } from "@prisma/client"
 import { CategoryKeyType, SortByValueType } from "@/types"
-import { formatSortBy } from "@/utils"
+import { FormatQuerySortBy } from "@/utils"
 
 const prisma = new PrismaClient()
 
 const defaultFilters: CategoryKeyType[] = ['bug', 'enhancement', 'feature', 'ui', 'ux']
+const defaultSortBy: SortByValueType = "most_upvotes"
 
-export async function GetRequests(sortby: SortByValueType = 'most_upvotes', filters: CategoryKeyType[] = defaultFilters): Promise<Feedback[]> {
+export async function GetFeedbacks(sortBy: SortByValueType = defaultSortBy, filters: CategoryKeyType[] = defaultFilters): Promise<Feedback[]> {
+    const orderBy = await FormatQuerySortBy(sortBy)
+    
     return await prisma.feedback.findMany({
         where: {
             OR: [
@@ -18,9 +20,7 @@ export async function GetRequests(sortby: SortByValueType = 'most_upvotes', filt
                 }
             ]
         },
-        orderBy: {
-            commentsCount: formatSortBy(sortby)
-        }
+        orderBy
     })
 }
 
