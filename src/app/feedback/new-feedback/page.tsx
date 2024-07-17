@@ -6,9 +6,7 @@ import { SelectInput } from "@/components/form-elements/input/select";
 import { TextInput } from "@/components/form-elements/input/text";
 import { TextAreaInput } from "@/components/form-elements/input/text-area";
 import { Frame } from "@/components/layout/frame";
-import { ActionResponse } from "@/types";
-import { cn } from "@/utils";
-import { Feedback } from "@prisma/client";
+import { ActionResponse, NewFeedbackType } from "@/types";
 import Link from "next/link";
 import { OptionHTMLAttributes } from "react";
 import { useFormState } from "react-dom";
@@ -37,7 +35,7 @@ const selectOptions: OptionHTMLAttributes<HTMLOptionElement>[] = [
 ]
 
 export default function NewFeedback() {
-    const [state, action] = useFormState<ActionResponse<Pick<Feedback, "title" | "category" | "description">>, FormData>(CreateNewFeedbackAction, {})
+    const [state, action] = useFormState<ActionResponse<NewFeedbackType>, FormData>(CreateNewFeedbackAction, {})
     
     return (
         <Frame className="rounded-xl flex flex-col gap-6 pt-11">

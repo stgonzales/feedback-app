@@ -1,5 +1,10 @@
 import { z } from "zod"
-import { CategoryKeyEnum, CategoryValueEnum, SortByKeyEnum, SortByOptionSchema, SortByOptionsMapSchema, SortByValueEnum } from "@/schema"
+import { CategoryKeyEnum, CategoryValueEnum, NewFeedback, SortByKeyEnum, SortByOptionSchema, SortByOptionsMapSchema, SortByValueEnum } from "@/schema"
+
+export type ActionResponse<T> = {
+    data?: T
+    error?: Record<keyof T, string | undefined> 
+}
 
 export type SortByOptionType = z.infer<typeof SortByOptionSchema>
 export type SortByOptionsMapType = z.infer<typeof SortByOptionsMapSchema>
@@ -12,7 +17,4 @@ export type CategoryMapType = {
     [key in CategoryKeyType]: CategoryValueType
 }
 
-export type ActionResponse<T> = {
-    data?: T
-    error?: Record<keyof T, string | undefined> 
-}
+export type NewFeedbackType = z.infer<typeof NewFeedback>

@@ -1,4 +1,5 @@
 import { CategoryMapType } from '@/types'
+import { Feedback } from '@prisma/client'
 import { z } from 'zod'
 
 export const SortByValueEnum = z.enum(['most_upvotes', 'least_upvotes', 'most_comments', 'least_comments'])
@@ -23,3 +24,9 @@ export const CategoriesOptionMap: CategoryMapType = {
     ui: 'UI',
     ux: 'UX'
 } as const
+
+export const NewFeedback: z.ZodType<Pick<Feedback, "title" | "category" | "description">> = z.object({
+    title: z.string().min(1),
+    category: CategoryKeyEnum,
+    description: z.string().min(1),
+})

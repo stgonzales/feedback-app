@@ -1,21 +1,13 @@
 "use server"
 
-import { CategoryKeyEnum } from "@/schema";
-import { ActionResponse } from "@/types";
-import { Feedback } from "@prisma/client";
-import { z } from "zod";
+import { NewFeedback } from "@/schema";
+import { ActionResponse, NewFeedbackType } from "@/types";
 import { PrismaClient } from '@prisma/client'
 import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient()
 
-const NewFeedback = z.object({
-    title: z.string().min(1),
-    category: CategoryKeyEnum,
-    description: z.string().min(1),
-})
-
-export async function CreateNewFeedbackAction(state: ActionResponse<Pick<Feedback, "title" | "category" | "description">>, payload: FormData): Promise<ActionResponse<Pick<Feedback, "title" | "category" | "description">>> {
+export async function CreateNewFeedbackAction(state: ActionResponse<NewFeedbackType>, payload: FormData): Promise<ActionResponse<NewFeedbackType>> {
 
     const validateNewFeedback = NewFeedback.safeParse({
         title: payload.get("title"),
