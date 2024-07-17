@@ -20,7 +20,7 @@ export function SelectInput({ label, caption, errorMsg, id, name, options, defau
             </div>
             <div className="flex flex-col gap-1">
                 <Select.Root name={name} defaultValue={defaultValue as string}>
-                    <Select.Trigger aria-label={name} id={id} name={name} className={cn("flex justify-between py-[14px] px-6 text-body-2 text-647196 rounded-md bg-F7F8FD active:border-4661E6 invalid:border-D73737", className)}>
+                    <Select.Trigger aria-label={name} id={id} name={name} className={cn("flex justify-between py-[14px] px-6 text-body-2 text-647196 rounded-md bg-F7F8FD focus:outline-4661E6", errorMsg && "border border-D73737",className)}>
                         <Select.Value />
                         <Select.Icon>
                             <ChevronDownIcon className="text-4661E6"/>
@@ -47,7 +47,7 @@ export function SelectInput({ label, caption, errorMsg, id, name, options, defau
                         </Select.Content>
                     </Select.Portal>
                 </Select.Root>
-                <span className="text-heading-4 text-D73737">{errorMsg}</span>
+                <span className="text-heading-4 font-normal text-D73737">{errorMsg}</span>
             </div>
         </div>
     )

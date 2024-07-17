@@ -11,3 +11,8 @@ export type CategoryKeyType = z.infer<typeof CategoryKeyEnum>
 export type CategoryMapType = {
     [key in CategoryKeyType]: CategoryValueType
 }
+
+export type ActionResponse<T> = {
+    data?: T
+    error?: Record<keyof T, string | undefined> 
+}
