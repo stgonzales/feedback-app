@@ -1,6 +1,6 @@
 "use server"
 
-import { GetCategories } from "@/api"
+import { api } from "@/api"
 import { InputHTMLAttributes } from "react"
 import { Tag } from "../tag"
 import { CategoryKeyType } from "@/types"
@@ -8,7 +8,7 @@ import { CategoriesOptionMap } from "@/schema"
 
 export async function DynamicCategories(props: InputHTMLAttributes<HTMLInputElement>) {
 
-    const categories = await GetCategories()
+    const categories = await api<{ category: string }[]>('/categories')
 
     return (
         <>

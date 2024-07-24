@@ -1,8 +1,8 @@
-import { GetFeedbackCount } from "@/api";
+import { api } from "@/api";
 import { LampGear } from "../icons/lamp-gear";
 
 export async function FeedbackCount(){
-    const count = await GetFeedbackCount()
+    const count = await api<number>('/feedback/count')
 
     return (
         <div className="hidden md:flex gap-4 items-center">

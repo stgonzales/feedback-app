@@ -2,8 +2,12 @@ import { Button } from "../../form-elements/input/button";
 import { FilterTags } from "../../category";
 import { HamburgerMenu } from "../../hamburger-menu";
 import { Frame } from "../frame";
+import { api } from "@/api";
+import { CategoryKeyType } from "@/types";
 
-export function Sidebar() {
+export async function Sidebar() {
+    const categories = await api<{ category: CategoryKeyType }[]>('/categories')
+
     return (
         <aside className="flex gap-3 justify-between lg:justify-normal lg:flex-col lg:gap-6 lg:max-w-[255px]">
             <Frame id="app-name" className="gradient text-FFFFFF to-blue-500 overflow-hidden w-full flex justify-between relative md:rounded-xl md:items-end md:pt-16">
@@ -13,7 +17,7 @@ export function Sidebar() {
                 </div>
                 <HamburgerMenu className="md:hidden z-10"/>
             </Frame>
-            <FilterTags categories={['ui', 'ux', 'enhancement', 'bug', 'feature']}/>
+            <FilterTags categories={categories}/>
             <Frame id="roadmap" className="hidden justify-between w-full md:flex md:rounded-xl md:flex-col gap-6">
                 <div className="flex justify-between">
                     <p className="text-heading-3 text-3A4374">Roadmap</p>

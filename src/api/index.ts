@@ -1,38 +1,12 @@
-import { Feedback, PrismaClient } from "@prisma/client"
-import { CategoryKeyType, SortByValueType } from "@/types"
-import { FormatQuerySortBy } from "@/utils"
+"use server"
 
-const prisma = new PrismaClient()
-
-const defaultFilters: CategoryKeyType[] = ['bug', 'enhancement', 'feature', 'ui', 'ux']
-const defaultSortBy: SortByValueType = "most_upvotes"
-
-export async function GetFeedbacks(sortBy: SortByValueType = defaultSortBy, filters: CategoryKeyType[] = defaultFilters): Promise<Feedback[]> {
-    const orderBy = await FormatQuerySortBy(sortBy)
-    
-    return await prisma.feedback.findMany({
-        where: {
-            OR: [
-                {
-                    category: {
-                        in: filters
-                    }
-                }
-            ]
-        },
-        orderBy
-    })
+export type APIResponse<T> = {
+    status: number
+    data?: T
 }
 
-export async function GetFeedbackCount(): Promise<number> {
-    return await prisma.feedback.count()
-}
-
-export async function GetCategories() {
-    return await prisma.feedback.groupBy({
-        by: ['category'],
-        _count: {
-            _all: true
-        }
-    })
+export async function api<T>(path: string, options?: RequestInit) {
+    return fetch(`http://localhost:3000/api${path}`, {
+        ...options,
+    }).then((res) => res.json() as Promise<T>)
 }

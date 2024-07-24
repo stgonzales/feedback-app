@@ -1,28 +1,37 @@
 import Image from 'next/image'
 
-import { GetFeedbacks } from '@/api';
+import { api } from '@/api';
 import { Button } from '@/components/form-elements/input/button';
 import { FeedbackItem } from '@/components/feedback';
-import { CategoryKeyType, SortByValueType } from '@/types';
+import { SortByValueType } from '@/types';
 import { formatFilters } from '@/utils';
 import Link from 'next/link';
+import { Feedback } from '@prisma/client';
 
 export default async function Suggestions({
   searchParams,
 }: {
   searchParams: {
-    category: CategoryKeyType | CategoryKeyType[] | undefined
+    category: string | string[] | undefined
     sortBy: string | undefined
   }
 }) {
 
     const sortBy = searchParams.sortBy as SortByValueType || undefined
 
-    const categories = formatFilters<CategoryKeyType>(searchParams.category)
+    const categoriesFilter = await formatFilters(searchParams.category)
 
-    const data = await GetFeedbacks(sortBy, categories)
+    const data = await api<Feedback[]>('/feedback/all', {
+      headers: {
+        sortBy,
+      }
+    })
 
-    if(!data.length) {
+    const feedbacks = data.map(d => {
+      if(categoriesFilter.includes(d.category)) return d
+    })
+
+    if(!feedbacks.length) {
         return (
           <div className="h-full bg-FFFFFF rounded-xl flex flex-col justify-center items-center gap-12 text-647196 py-28 animate-appears">
               <Image src="/detective.png" alt='detective' width={130} height={136}/>
@@ -39,7 +48,7 @@ export default async function Suggestions({
     
     return (
       <div id="feedbacks" className='flex flex-col gap-5'>
-          {data.map((d, i) => <FeedbackItem key={i} {...d}/>)}
+          {feedbacks.map((d, i) => <FeedbackItem key={i} {...d}/>)}
       </div>
     )
 }
