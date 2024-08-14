@@ -6,15 +6,6 @@ import { api } from '@/api'
 
 export const cn = (...args: ClassValue[]) => twMerge(clsx(args))
 
-export const formatFilters = async (s?: string | string[]): Promise<Array<string>> => {
-    if(!s) {
-        const categories = await api<{ category: CategoryKeyType }[]>('/categories')
-        
-        return categories.map(c => c.category)
-    } else if(!Array.isArray(s)) return [s]
-    return s
-}
-
 export const FormatQuerySortBy = async (k?: SortByValueType): Promise<Prisma.FeedbackOrderByWithRelationInput> => {
     switch (true) {
         case k === 'least_comments':
