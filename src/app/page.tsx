@@ -20,12 +20,14 @@ export default async function Feedbacks({
   }
 }) {
     const sortBy = searchParams.sortBy as SortByValueType || undefined
-    const category = searchParams.category?.toString()
+    const category = searchParams.category?.toString()    
 
     const urlParams = new URLSearchParams()
 
     if(sortBy) urlParams.set("sortBy", sortBy)
-    if(category) urlParams.set("category", category)
+    if(category) {
+      category.split(',').forEach(c =>  urlParams.append("category", c))
+    }
 
     const data = await api<Feedback[]>(`/feedback/all${'?' + urlParams}`)
 

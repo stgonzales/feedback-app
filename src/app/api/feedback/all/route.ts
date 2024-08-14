@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
 
     const sortByString = searchParams.get('sortBy') as SortByValueType
-    const categoryString = searchParams.get('category')
+    const categoriesFilter = searchParams.getAll('category') as CategoryKeyType[]
 
     const orderBy = await FormatQuerySortBy(sortByString)
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
             OR: [
                 {
                     category: {
-                        in:  (categoryString?.split(',') as Array<CategoryKeyType>) || categories
+                        in:  categoriesFilter.length ?  categoriesFilter :  categories
                     }
                 }
             ]
