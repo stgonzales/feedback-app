@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "cy:open": "cypress open",
+    "cy:e2e": "cypress run --e2e",
+    "cy:component": "cypress run --component",
     "postinstall": "npx prisma generate && npx prisma db push && npx prisma db seed"
   },
   "dependencies": {
