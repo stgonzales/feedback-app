@@ -1,11 +1,11 @@
-"use server"
-
 import { api } from "@/api"
 import { InputHTMLAttributes } from "react"
 import { Tag } from "../tag"
 import { CategoryKeyType } from "@/types"
 import { CategoriesOptionMap } from "@/schema"
 
+
+//TODO:causing infinity loop
 export async function DynamicCategories(props: InputHTMLAttributes<HTMLInputElement>) {
 
     const categories = await api<{ category: string }[]>('/categories')

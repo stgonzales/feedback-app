@@ -6,7 +6,7 @@ import { api } from "@/api";
 import { CategoryKeyType } from "@/types";
 
 export async function Sidebar() {
-    const categories = await api<{ category: CategoryKeyType }[]>('/categories')
+    const categories = await api<CategoryKeyType[]>('/categories')
 
     return (
         <aside className="flex gap-3 justify-between lg:justify-normal lg:flex-col lg:gap-6 lg:max-w-[255px]">
@@ -17,7 +17,7 @@ export async function Sidebar() {
                 </div>
                 <HamburgerMenu className="md:hidden z-10"/>
             </Frame>
-            <FilterTags categories={categories}/>
+            <FilterTags categories={categories} />
             <Frame id="roadmap" className="hidden justify-between w-full md:flex md:rounded-xl md:flex-col gap-6">
                 <div className="flex justify-between">
                     <p className="text-heading-3 text-3A4374">Roadmap</p>

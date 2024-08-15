@@ -7,7 +7,7 @@ import { CategoriesOptionMap } from "@/schema";
 import { useParams } from "@/hooks";
 import { Frame } from "../layout/frame";
 
-export function FilterTags({ categories }: { categories: { category: CategoryKeyType }[] }) {
+export function FilterTags({ categories }: { categories: CategoryKeyType[] }) {
     
     const { paramstate, deleteParams, appendParams } = useParams()
 
@@ -24,10 +24,10 @@ export function FilterTags({ categories }: { categories: { category: CategoryKey
                 <input type="checkbox" id="all" name="all" className="hidden" onChange={handleChange} checked={!paramstate().has('category') || paramstate().get('category')?.toString() === 'all'}/>
                 All
             </Tag>
-            { categories.map(({ category }) => (
-                <Tag key={category} id={category}>
-                    <input type="checkbox" id={category} name={category} className="hidden" onChange={handleChange} checked={paramstate().getAll('category').includes(category)}/>
-                    {CategoriesOptionMap[category]}
+            { categories.map((c) => (
+                <Tag key={c} id={c}>
+                    <input type="checkbox" id={c} name={c} className="hidden" onChange={handleChange} checked={paramstate().getAll('category').includes(c)}/>
+                    {CategoriesOptionMap[c]}
                 </Tag>
             ))}
         </Frame>
